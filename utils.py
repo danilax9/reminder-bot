@@ -50,6 +50,7 @@ def parse_reminder(text: str):
         'PREFER_DATES_FROM': 'future',
         'RETURN_AS_TIMEZONE_AWARE': False,
         'PREFER_DAY_OF_MONTH': 'current',
+        'RELATIVE_BASE': now,
     }
     
     moscow_tz = pytz.timezone('Europe/Moscow')
