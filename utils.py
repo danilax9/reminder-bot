@@ -45,6 +45,9 @@ def parse_reminder(text: str):
                 text = re.sub(pattern, '', text, flags=re.IGNORECASE).strip()
                 break
 
+    moscow_tz = pytz.timezone('Europe/Moscow')
+    now = datetime.now(moscow_tz).replace(tzinfo=None) # Работаем с naive datetime для совместимости с dateparser
+
     # Настройки для dateparser
     settings = {
         'PREFER_DATES_FROM': 'future',
@@ -52,9 +55,6 @@ def parse_reminder(text: str):
         'PREFER_DAY_OF_MONTH': 'current',
         'RELATIVE_BASE': now,
     }
-    
-    moscow_tz = pytz.timezone('Europe/Moscow')
-    now = datetime.now(moscow_tz).replace(tzinfo=None) # Работаем с naive datetime для совместимости с dateparser
     
     # Ищем даты/время в оставшемся тексте
     results = search_dates(text, languages=['ru'], settings=settings)
