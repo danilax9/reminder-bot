@@ -18,6 +18,9 @@ def parse_reminder(text: str):
     """
     Парсит сообщение пользователя, выделяя текст напоминания, дату/время и тип повторения.
     """
+    # Предварительная нормализация: заменяем "в 13" на "в 13:00", чтобы dateparser лучше понимал
+    # Ищем "в" + пробел + 1-2 цифры, после которых нет двоеточия или других цифр
+    text = re.sub(r'\bв\s+(\d{1,2})(?!\s*[:\d])\b', r'в \1:00', text, flags=re.IGNORECASE)
     text_lower = text.lower()
     is_recurring = False
     recurrence_type = None  # 'daily', 'weekly'
